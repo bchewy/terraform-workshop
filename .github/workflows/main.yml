@@ -2,12 +2,12 @@ name: "ex 2 terraform remote backend"
 on:
   push:
     branches:
-        - main
+      - main
     paths:
-        - 'section2/terraform/**'
+      - "section2/terraform/**"
   pull_request:
     paths:
-        - 'section2/terraform/**'
+      - "section2/terraform/**"
 permissions:
   id-token: write # This is required for aws oidc connection
   contents: read # This is required for actions/checkout
@@ -110,4 +110,4 @@ jobs:
         # only apply upon push to main branch
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve -input=false
+        run: terraform apply -auto-approve -input=false -var student_id=${{ secrets.STUDENT_ID }}
