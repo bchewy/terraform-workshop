@@ -1,4 +1,4 @@
-name: "ex2 Terraform Destroy"
+name: "Terraform Destroy"
 
 on:
   workflow_dispatch:
@@ -11,7 +11,7 @@ permissions:
 env:
   TF_LOG: INFO
   AWS_REGION: ${{ secrets.AWS_REGION }}
-  TF_VAR_STUDENT_ID: ${{ secrets.STUDENT_ID }} # by specifying
+  TF_VAR_STUDENT_ID: ${{ secrets.STUDENT_ID }} # by specifying 
 
 jobs:
   undeploy:

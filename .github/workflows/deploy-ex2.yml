@@ -1,13 +1,13 @@
-name: "ex 2 terraform remote backend"
+name: "terraform remote backend"
 on:
   push:
     branches:
-      - main
+        - main
     paths:
-      - "section2/terraform/**"
+        - 'section2/terraform/**'
   pull_request:
     paths:
-      - "section2/terraform/**"
+        - 'section2/terraform/**'
 permissions:
   id-token: write # This is required for aws oidc connection
   contents: read # This is required for actions/checkout
@@ -47,13 +47,12 @@ jobs:
         env:
           AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
           AWS_BUCKET_KEY_NAME: ${{ secrets.AWS_BUCKET_KEY_NAME }}
-          DYNAMODB_TABLE: ${{ secrets.AWS_DYNAMODB_TABLE }}
         run: |
           terraform init \
             -backend-config="bucket=${AWS_BUCKET_NAME}" \
             -backend-config="key=${AWS_BUCKET_KEY_NAME}" \
             -backend-config="region=${AWS_REGION}" \
-            -backend-config="dynamodb_table=${DYNAMODB_TABLE}"
+            -backend-config="dynamodb_table=${AWS_DYNAMODB_TABLE}"
 
       - name: Terraform Validate
         id: validate
@@ -110,4 +109,4 @@ jobs:
         # only apply upon push to main branch
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve -input=false -var student_id=$ TF_VAR_STUDENT_ID}
+        run: terraform apply -auto-approve -input=false -var student_id=${secrets.STUDENT_ID }}
